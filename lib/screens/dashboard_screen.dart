@@ -5,7 +5,14 @@ import 'package:skadgate_innovations/screens/crypto_screen.dart';
 import 'package:skadgate_innovations/screens/home_screen.dart';
 import 'package:skadgate_innovations/styles.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -33,7 +40,6 @@ class DashboardScreen extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,7 +118,7 @@ class DashboardScreen extends StatelessWidget {
                           fit: StackFit.expand,
                           children: [
                             Positioned(
-                              bottom: 30,
+                              bottom: 15,
                               left: 50,
                               child: Transform.rotate(
                                 angle: 20,
@@ -126,10 +132,8 @@ class DashboardScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              child: CustomPaint(
-                                painter: FirstDashboardSemiCirclePainter(),
-                              ),
+                            CustomPaint(
+                              painter: FirstDashboardSemiCirclePainter(),
                             ),
                             Positioned(
                               top: 60,
@@ -228,7 +232,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: 5,
+                          itemCount: _recentActivityModelList.length,
                           itemBuilder: (context, index) {
                             return RecentActivityListTile(
                               recentActivityModel:
@@ -248,18 +252,24 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
         items: bottomNavBarItemList,
-        selectedItemColor: dashboardPrimaryColor,
-        selectedLabelStyle: dashboardTextStyle1.copyWith(
-            color: dashboardPrimaryColor, fontSize: 16),
-        unselectedLabelStyle:
-            dashboardTextStyle1.copyWith(color: dashboardPrimaryColor),
+        currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: dashboardPrimaryColor,
+        unselectedItemColor: dashboardPrimaryColor,
+        selectedLabelStyle: dashboardTextStyle1.copyWith(
+            color: dashboardPrimaryColor, fontSize: 18),
+        unselectedLabelStyle: dashboardTextStyle1.copyWith(
+            color: dashboardPrimaryColor, fontSize: 18),
+        onTap: (currentIndex) => setState(() => _selectedIndex = currentIndex),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: dashboardPrimaryColor,
-        child: Image.asset('images/paper_plane_icon.png'),
+        child: Image.asset(
+          'images/paper_plane_icon.png',
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -342,6 +352,32 @@ List<RecentActivityModel> _recentActivityModelList = [
     amount: '400.00',
     subtitle: ' Purchase on Ebay...',
     title: 'Tuesday, August 31st, 2020',
+  ),
+  RecentActivityModel(
+    amount: '5.44',
+    currency: 'USD',
+    subtitle: ' Netflix Subscription',
+    title: 'Tuesday, November 31st, 2020',
+  ),
+  RecentActivityModel(
+    currency: 'EUR',
+    amount: '1,200.00',
+    color: dashboardAccentColor,
+    subtitle: ' University of Calgary...',
+    title: 'Wednesday, December 31st, 2020',
+  ),
+  RecentActivityModel(
+    amount: '5.44',
+    currency: 'USD',
+    subtitle: ' Netflix Subscription',
+    title: 'Tuesday, November 31st, 2020',
+  ),
+  RecentActivityModel(
+    currency: 'EUR',
+    amount: '1,200.00',
+    color: dashboardAccentColor,
+    subtitle: ' University of Calgary...',
+    title: 'Wednesday, December 31st, 2020',
   ),
   RecentActivityModel(
     amount: '5.44',

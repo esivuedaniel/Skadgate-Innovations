@@ -1,7 +1,8 @@
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:skadgate_innovations/screens/crypto_screen.dart';
 import 'package:skadgate_innovations/styles.dart';
+import 'package:skadgate_innovations/screens/crypto_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 0;
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(height: 10),
               ListTile(
                 leading: CircleAvatar(
                   radius: 30,
@@ -28,9 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     radius: 20,
                     backgroundColor: Color(0XFF00C2FF),
                     child: Text(
-                      'S A',
+                      'SA',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -56,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 visualDensity: VisualDensity(horizontal: -4),
               ),
+              SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20.0,
@@ -75,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Positioned(
                             top: 60,
-                            left: 70,
+                            left: 65,
                             child: CustomPaint(
                               painter: ArcPainter(),
                             ),
@@ -98,8 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                   NumberFormat.currency(name: '\u{20A6}')
                                       .format(657000.01),
-                                  style: textStyle.copyWith(
-                                    fontSize: 20,
+                                  style: TextStyle(
+                                    fontSize: 26,
+                                    color: kPrimaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 )
@@ -162,9 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        onTap: (currentIndex) => setState(() => selectedIndex = currentIndex),
         items: bottomNavBarItems,
+        currentIndex: _selectedIndex,
         selectedItemColor: kPrimaryColor,
         type: BottomNavigationBarType.fixed,
         unselectedIconTheme: IconThemeData(
@@ -172,6 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         unselectedLabelStyle: TextStyle(color: Colors.red),
         selectedIconTheme: IconThemeData(color: Color(0XFF354A82)),
+        onTap: (currentIndex) => setState(() => _selectedIndex = currentIndex),
       ),
     );
   }
@@ -313,10 +318,10 @@ class ArcPainter extends CustomPainter {
 
     var paint = Paint()
       ..strokeWidth = 18
-      ..color = Color(0XFF87E3FF).withOpacity(0.31)
       ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke;
-    //draw arc
+      ..style = PaintingStyle.stroke
+      ..color = Color(0XFF87E3FF).withOpacity(0.31);
+
     canvas.drawArc(
         Rect.fromCircle(center: Offset(xAxis * 0.3, yAxis * 0.5), radius: 40),
         5.7,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:skadgate_innovations/screens/dashboard_screen.dart';
 import 'package:skadgate_innovations/screens/home_screen.dart';
 
 import '../styles.dart';
 
 class CryptoScreen extends StatelessWidget {
+  double _containerHeaderHeight = 112;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,8 +13,9 @@ class CryptoScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        leading: Icon(
-          Icons.arrow_back_ios_outlined,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icon(Icons.arrow_back_ios_outlined),
           color: kPrimaryColor,
         ),
         title: Text(
@@ -35,100 +38,113 @@ class CryptoScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: Text(
                     'WITHDRAW FUNDS',
-                    style: textStyle,
+                    style: textStyle.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-              Stack(
-                children: [
-                  Container(
-                    height: 112,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('images/rectangle.png'),
+              SizedBox(height: 20),
+              InkWell(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DashboardScreen(),
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: _containerHeaderHeight,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('images/rectangle.png'),
+                        ),
                       ),
                     ),
-                  ),
-                  LayoutBuilder(
-                    builder: (_, constraints) {
+                    LayoutBuilder(
+                      builder: (_, constraints) {
+                        return CustomPaint(
+                          size: Size(
+                              constraints.maxWidth, _containerHeaderHeight),
+                          painter: SemiCirclePainter(),
+                        );
+                      },
+                    ),
+                    Positioned(
+                      right: 40,
+                      top: 25,
+                      child: CustomPaint(
+                        painter: CirclePainter(
+                          radius: 20,
+                          color: Colors.white.withOpacity(0.11),
+                        ),
+                      ),
+                    ),
+                    LayoutBuilder(builder: (_, constraints) {
                       return CustomPaint(
-                        size: Size(constraints.maxWidth, 112),
-                        painter: SemiCirclePainter(),
+                        size:
+                            Size(constraints.maxWidth, _containerHeaderHeight),
+                        painter: LinePainter(),
                       );
-                    },
-                  ),
-                  Positioned(
-                    right: 40,
-                    top: 25,
-                    child: CustomPaint(
-                      painter: CirclePainter(
-                        radius: 20,
-                        color: Colors.white.withOpacity(0.11),
+                    }),
+                    Positioned(
+                      top: 45,
+                      left: 10,
+                      child: Image.asset('images/bitcoin_icon2.png'),
+                    ),
+                    Positioned(
+                      top: 40,
+                      left: 50,
+                      child: Text(
+                        '1.00322BTC',
+                        style: textStyle.copyWith(
+                          fontSize: 25,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  LayoutBuilder(builder: (_, constraints) {
-                    return CustomPaint(
-                      size: Size(constraints.maxWidth, 112),
-                      painter: LinePainter(),
-                    );
-                  }),
-                  Positioned(
-                    top: 45,
-                    left: 10,
-                    child: Image.asset('images/bitcoin_icon2.png'),
-                  ),
-                  Positioned(
-                    top: 40,
-                    left: 50,
-                    child: Text(
-                      '1.00322BTC',
-                      style: textStyle.copyWith(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    Positioned(
+                      top: 70,
+                      left: 40,
+                      child: Text(
+                        'BITCOIN WALLET BALANCE',
+                        style: textStyle.copyWith(
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: 70,
-                    left: 40,
-                    child: Text(
-                      'BITCOIN WALLET BALANCE',
-                      style: textStyle.copyWith(
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
+                    Positioned(
+                      top: 50,
+                      right: 42,
+                      child: Text(
+                        'BTC/USD',
+                        style: textStyle.copyWith(
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: 50,
-                    right: 42,
-                    child: Text(
-                      'BTC/USD',
-                      style: textStyle.copyWith(
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
+                    Positioned(
+                      top: 70,
+                      right: 20,
+                      child: Text(
+                        '\u{0024} 39,445.18',
+                        style: textStyle.copyWith(
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: 70,
-                    right: 20,
-                    child: Text(
-                      '\u{0024} 39,445.18',
-                      style: textStyle.copyWith(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(height: 20),
               Row(
@@ -185,7 +201,7 @@ class CryptoScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Initiate transaction to view record.',
+                        'Initiate transaction to view record',
                         style: textStyle.copyWith(
                           fontWeight: FontWeight.w400,
                         ),

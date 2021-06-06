@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 Color kPrimaryColor = Color(0XFF233972);
 TextStyle textStyle = GoogleFonts.dmSans(
-  color: Color(0XFF233972),
+  color: kPrimaryColor,
 );
 Color dashboardAccentColor = Color(0XFF67407E);
 Color dashboardPrimaryColor = Color(0XFF562F6D);
